@@ -1,16 +1,18 @@
-import telebot
-from datetime import datetime
-import pytz
-import sys
-
-# ←←← ВСТАВЬ СВОЙ ТОКЕН
 import os
-API_TOKEN = os.getenv('8755035514:AAFlxYdkYY7YhgSngRnZ0qiTb7fshL5c3ZM') # Теперь бот будет брать токен из настроек Railway
+import telebot
+import sys
+import pytz
+from datetime import datetime
 
-# ←←← ВСТАВЬ СВОЙ chat_id (тот, который дал /getid)
-YOUR_CHAT_ID = 5364533844   # ← обязательно замени на свой!
+# 1. Получаем токен из переменной окружения (настрой в Railway!)
+TOKEN = os.getenv('8755035514:AAFlxYdkYY7YhgSngRnZ0qiTb7fshL5c3ZM')
 
+# 2. Инициализируем бота
 bot = telebot.TeleBot(TOKEN)
+
+# 3. Твой chat_id
+YOUR_CHAT_ID = 5364533844
+
 TARGET_DATE = datetime(2027, 10, 1).date()
 moscow_tz = pytz.timezone('Europe/Moscow')
 
@@ -22,9 +24,8 @@ def get_days_left():
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, 
-        "✅ Бот работает через Scheduled Task.\n\n"
-        "Каждый день в ~9:00 по Москве я присылаю уведомление.\n"
-        "Команды: /days — показать сейчас"
+        "✅ Бот работает.\n\n"
+        "Команды: /days — показать сколько осталось"
     )
 
 @bot.message_handler(commands=['days'])
@@ -41,7 +42,6 @@ def send_days(message):
 def get_id(message):
     bot.reply_to(message, f"Твой chat_id: `{message.chat.id}`")
 
-# === Главная функция для ежедневного уведомления ===
 def send_daily_notification():
     days = get_days_left()
     try:
@@ -54,15 +54,15 @@ def send_daily_notification():
             bot.send_message(YOUR_CHAT_ID, "🎉 Сегодня 1 октября 2027 года!")
         else:
             bot.send_message(YOUR_CHAT_ID, "📅 1 октября 2027 уже прошло.")
-        print(f"Уведомление отправлено успешно. Осталось дней: {days}")
+        print(f"Уведомление отправлено. Осталось дней: {days}")
     except Exception as e:
         print("Ошибка при отправке:", e)
 
-# Если запускаем как Scheduled Task — сразу отправляем уведомление и выходим
 if __name__ == "__main__":
+    # Если запуск с аргументом --daily (для расписания)
     if len(sys.argv) > 1 and sys.argv[1] == "--daily":
         send_daily_notification()
     else:
-        # Если запускаешь вручную — запускаем polling (для команд)
-        print("✅ Бот запущен в ручном режиме (polling)")
+        # Обычный запуск для ответов на команды
+        print("✅ Бот запущен в режиме polling")
         bot.polling(none_stop=True)
