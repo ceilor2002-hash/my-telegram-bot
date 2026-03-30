@@ -4,11 +4,11 @@ import sys
 import pytz
 from datetime import datetime
 
-# 1. Получаем токен из переменной окружения (настрой в Railway!)
-TOKEN = os.getenv('8755035514:AAFlxYdkYY7YhgSngRnZ0qiTb7fshL5c3ZM')
-
-# 2. Инициализируем бота
+# ПРАВИЛЬНО:
 TOKEN = os.getenv('BOT_TOKEN')
+
+# Инициализируем бота
+bot = telebot.TeleBot(TOKEN)
 
 # 3. Твой chat_id
 YOUR_CHAT_ID = 5364533844
