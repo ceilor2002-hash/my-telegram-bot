@@ -4,7 +4,8 @@ import pytz
 import sys
 
 # ←←← ВСТАВЬ СВОЙ ТОКЕН
-TOKEN = '8755035514:AAFlxYdkYY7YhgSngRnZ0qiTb7fshL5c3ZM'
+import os
+API_TOKEN = os.getenv('8755035514:AAFlxYdkYY7YhgSngRnZ0qiTb7fshL5c3ZM') # Теперь бот будет брать токен из настроек Railway
 
 # ←←← ВСТАВЬ СВОЙ chat_id (тот, который дал /getid)
 YOUR_CHAT_ID = 5364533844   # ← обязательно замени на свой!
