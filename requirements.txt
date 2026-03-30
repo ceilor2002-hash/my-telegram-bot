@@ -1,4 +1,1 @@
-aiogram
-pandas
-ezdxf
 pyTelegramBotAPI
