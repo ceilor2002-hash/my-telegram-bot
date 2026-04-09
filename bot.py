@@ -25,14 +25,14 @@ def get_days_left():
 def start(message):
     bot.reply_to(message, 
         "✅ Бот работает.\n\n"
-        "Команды: /days — показать сколько осталось"
+        "Команды: Дни — показать сколько осталось"
     )
 
-@bot.message_handler(commands=['days'])
+@bot.message_handler(commands=['days', 'дни'])
 def send_days(message):
     days = get_days_left()
     if days > 0:
-        bot.reply_to(message, f"🔥 До 1 октября 2027 года осталось **{days} дней**!")
+        bot.reply_to(message, f"🔥 До 1 октября 2027 года осталось {days} дней!")
     elif days == 0:
         bot.reply_to(message, "🎉 Сегодня 1 октября 2027 года!")
     else:
@@ -48,7 +48,7 @@ def send_daily_notification():
         if days > 0:
             bot.send_message(
                 YOUR_CHAT_ID,
-                f"🔔 Доброе утро!\n\nДо 1 октября 2027 года осталось **{days} дней** 🔥"
+                f"🔔 Доброе утро!\n\nДо 1 октября 2027 года осталось {days} дней 🔥"
             )
         elif days == 0:
             bot.send_message(YOUR_CHAT_ID, "🎉 Сегодня 1 октября 2027 года!")
